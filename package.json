@@ -1,21 +1,20 @@
 {
-  "name": "tutorialzine-remote-controller",
+  "name": "remote-present-slideshare",
   "version": "1.0.0",
-  "description": "Using your smartphone as a remote control for reveal.js",
+  "description": "Reveal js presentation with websocket for slideshare",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "supervisor app.js"
   },
   "keywords": [
-    "tutorialzine",
     "remote",
     "control",
     "mobile",
     "presentation",
     "tutorial"
   ],
-  "author": "Tutorialzine",
+  "author": "Jordan Li",
   "license": "MIT",
   "dependencies": {
     "async": "^1.3.0",
