@@ -41,11 +41,11 @@ app.set('view engine', 'jade');
 
 // app.use('/', routes);
 app.get('/', function(req, res) {
-    if(!argv.l || !argv.d){
+    if(!argv.l && !argv.d){
         res.render('default', { title: 'Demo' });
     } else {
         if(argv.d){
-            slide(argv.d,function(err,img){
+            speaker(argv.d,function(err,img){
                 res.render('index', {
                     title: 'Present',
                     url: img.url
