@@ -30,11 +30,9 @@ $(function() {
 		// If there is a key, send it to the server-side
 		// through the socket.io channel with a 'load' event.
 
-		if(key.length) {
-			socket.emit('load', {
-				key: key
-			});
-		}
+		socket.emit('load', {
+			key: key
+		});
 
 	});
 
@@ -92,21 +90,47 @@ $(function() {
 
 		}
 		else {
+		    // Unblur everything
+			presentation.removeClass('blurred');
 
-			// Wrong secret key
-
-			clearTimeout(animationTimeout);
-
-			// Addding the "animation" class triggers the CSS keyframe
-			// animation that shakes the text input.
-
-			secretTextBox.addClass('denied animation');
+			form.hide();
 			
-			animationTimeout = setTimeout(function(){
-				secretTextBox.removeClass('animation');
-			}, 1000);
+		    Reveal.configure({
+		        keyboard: false,
+		        touch: false
+		    });
+		    socket.on('navigate', function(data){
+	
+				// Another device has changed its slide. Change it in this browser, too:
 
-			form.show();
+				window.location.hash = data.hash;
+
+				// The "ignore" variable stops the hash change from
+				// triggering our hashchange handler above and sending
+				// us into a never-ending cycle.
+
+				ignore = true;
+
+				setInterval(function () {
+					ignore = false;
+				},100);
+
+			});
+
+// 			// Wrong secret key
+
+// 			clearTimeout(animationTimeout);
+
+// 			// Addding the "animation" class triggers the CSS keyframe
+// 			// animation that shakes the text input.
+
+// 			secretTextBox.addClass('denied animation');
+			
+// 			animationTimeout = setTimeout(function(){
+// 				secretTextBox.removeClass('animation');
+// 			}, 1000);
+
+// 			form.show();
 		}
 
 	});
