@@ -21,6 +21,7 @@ var io = require('socket.io').listen(app.listen(port));
 
 // yql for slides
 var slide = require('./lib/slide.js');
+var speaker = require('./lib/speaker.js');
 
 // App Configuration
 
@@ -40,15 +41,24 @@ app.set('view engine', 'jade');
 
 // app.use('/', routes);
 app.get('/', function(req, res) {
-    if(!argv.l){
+    if(!argv.l || !argv.d){
         res.render('default', { title: 'Demo' });
     } else {
-        slide(argv.l,function(err,img){
-            res.render('index', {
-                title: 'Present',
-                url: img.url
+        if(argv.d){
+            slide(argv.d,function(err,img){
+                res.render('index', {
+                    title: 'Present',
+                    url: img.url
+                })
             })
-        })
+        } else {
+            slide(argv.l,function(err,img){
+                res.render('index', {
+                    title: 'Present',
+                    url: img.url
+                })
+            })
+        }
     }
 });
 
