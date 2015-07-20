@@ -4,7 +4,11 @@ $(function() {
 	// See more here https://github.com/hakimel/reveal.js#configuration
 
 	Reveal.initialize({
-		history: true		// Every slide will change the URL
+		history: true,		// Every slide will change the URL
+
+        // Bounds for smallest/largest possible scale to apply to content
+        minScale: 0.2,
+        maxScale: 1.5
 	});
 
 	// Connect to the socket
