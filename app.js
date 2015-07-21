@@ -19,10 +19,31 @@ var io = require('socket.io').listen(app.listen(port));
 //Routes
 // var routes = require('./routes/index');
 
-// yql for slides
+// slides generation
 var slide = require('./lib/slide.js');
 var speaker = require('./lib/speaker.js');
+var pdf = require('./lib/pdf.js')
+var img;
+var demo = true;
 
+if(argv.l){
+    slide(argv.l,function(err,res){
+        img = res;
+        demo = false;
+    })
+}
+if(argv.d){
+    speaker(argv.d,function(err,res){
+        img = res;
+        demo = false;
+    })
+}
+if(argv.f){
+    pdf(argv.f,function(err,res){
+        img = res;
+        demo = false;
+    })
+}
 // App Configuration
 
 // Make the files in the public folder available to the world
@@ -41,24 +62,13 @@ app.set('view engine', 'jade');
 
 // app.use('/', routes);
 app.get('/', function(req, res) {
-    if(!argv.l && !argv.d){
+    if(demo){
         res.render('default', { title: 'Demo' });
     } else {
-        if(argv.d){
-            speaker(argv.d,function(err,img){
-                res.render('index', {
-                    title: 'Present',
-                    url: img.url
-                })
-            })
-        } else {
-            slide(argv.l,function(err,img){
-                res.render('index', {
-                    title: 'Present',
-                    url: img.url
-                })
-            })
-        }
+        res.render('index', {
+            title: 'Present',
+            url: img.url
+        })
     }
 });
 
